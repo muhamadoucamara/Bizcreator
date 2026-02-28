@@ -93,9 +93,9 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
               <h4 className="font-bold mb-6 text-emerald-400">Herramientas</h4>
               <ul className="space-y-3 text-sm text-indigo-100">
                 <li><Link to="/herramientas" className="hover:text-white transition-colors">Nombres de Marca</Link></li>
-                <li><Link to="/herramientas" className="hover:text-white transition-colors">Slogans</Link></li>
-                <li><Link to="/herramientas" className="hover:text-white transition-colors">Ideas de Negocio</Link></li>
+                <li><Link to="/herramientas" className="hover:text-white transition-colors">Tiendas Online</Link></li>
                 <li><Link to="/herramientas" className="hover:text-white transition-colors">Bio de Instagram</Link></li>
+                <li><Link to="/herramientas" className="hover:text-white transition-colors">Cripto & Web3</Link></li>
               </ul>
             </div>
 

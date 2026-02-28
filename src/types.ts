@@ -1,3 +1,20 @@
+export type ToolType = 
+  | "brand-name" 
+  | "slogan" 
+  | "product-description" 
+  | "instagram-bio" 
+  | "business-idea" 
+  | "crypto-name" 
+  | "online-store-name";
+
+export interface HistoryItem {
+  id: string;
+  type: ToolType;
+  input: string;
+  result: string;
+  timestamp: number;
+}
+
 export interface BlogPost {
   id: string;
   title: string;

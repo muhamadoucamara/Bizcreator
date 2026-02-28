@@ -37,6 +37,20 @@ export const Tools: React.FC = () => {
       placeholder: "Ej: Tecnología, educación, mascotas...",
       type: "business-idea" as const,
       seoText: "La validación de ideas es crucial. Una buena idea de negocio resuelve un problema real en un mercado con demanda. Usa estas sugerencias como punto de partida para tu **investigación de mercado**."
+    },
+    {
+      title: "Nombres para Tiendas Online",
+      description: "Encuentra el nombre comercial perfecto para tu e-commerce o tienda de dropshipping.",
+      placeholder: "Ej: Tienda de accesorios para mascotas de diseño...",
+      type: "online-store-name" as const,
+      seoText: "El nombre de tu tienda online debe ser **corto**, **fácil de escribir** y **disponible como dominio**. Un buen nombre ayuda a generar confianza inmediata en el comprador digital."
+    },
+    {
+      title: "Nombres para Criptomonedas",
+      description: "Genera nombres futuristas y tecnológicos para tus proyectos de tokens, DAOs o protocolos Web3.",
+      placeholder: "Ej: Protocolo de finanzas descentralizadas enfocado en privacidad...",
+      type: "crypto-name" as const,
+      seoText: "En el mundo Web3, el nombre debe transmitir **innovación** y **seguridad**. Usar términos que evoquen tecnología blockchain ayuda a posicionar tu proyecto en la comunidad cripto."
     }
   ];
 

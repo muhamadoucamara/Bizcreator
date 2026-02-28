@@ -1,6 +1,8 @@
 import React from 'react';
-import { Sparkles, Copy, Check, Loader2 } from 'lucide-react';
+import { Sparkles, Copy, Check, Loader2, History, Trash2, Clock } from 'lucide-react';
 import { generateContent, ToolType } from '../services/gemini';
+import { historyService } from '../services/history';
+import { HistoryItem } from '../types';
 import ReactMarkdown from 'react-markdown';
 
 interface AIToolProps {
@@ -16,6 +18,12 @@ export const AITool: React.FC<AIToolProps> = ({ title, description, placeholder,
   const [result, setResult] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
+  const [history, setHistory] = React.useState<HistoryItem[]>([]);
+  const [showHistory, setShowHistory] = React.useState(false);
+
+  React.useEffect(() => {
+    setHistory(historyService.getByType(type));
+  }, [type]);
 
   const handleGenerate = async () => {
     if (!input.trim()) return;
@@ -23,6 +31,21 @@ export const AITool: React.FC<AIToolProps> = ({ title, description, placeholder,
     const res = await generateContent(type, input);
     setResult(res);
     setLoading(false);
+    
+    const newItem = historyService.save({ type, input, result: res });
+    setHistory(prev => [newItem, ...prev].slice(0, 50));
+  };
+
+  const handleDeleteHistory = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    historyService.delete(id);
+    setHistory(prev => prev.filter(item => item.id !== id));
+  };
+
+  const handleSelectHistory = (item: HistoryItem) => {
+    setInput(item.input);
+    setResult(item.result);
+    setShowHistory(false);
   };
 
   const handleCopy = () => {
@@ -61,6 +84,50 @@ export const AITool: React.FC<AIToolProps> = ({ title, description, placeholder,
             )}
             {loading ? 'Generando...' : 'Generar con IA'}
           </button>
+
+          {history.length > 0 && (
+            <div className="flex justify-center">
+              <button
+                onClick={() => setShowHistory(!showHistory)}
+                className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors"
+              >
+                <History size={16} />
+                {showHistory ? 'Ocultar historial' : `Ver historial (${history.length})`}
+              </button>
+            </div>
+          )}
+
+          {showHistory && (
+            <div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-2">Generaciones Recientes</h4>
+              <div className="max-h-64 overflow-y-auto space-y-2 pr-2 custom-scrollbar">
+                {history.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => handleSelectHistory(item)}
+                    className="p-4 bg-slate-50 border border-slate-100 rounded-xl hover:border-indigo-200 hover:bg-white cursor-pointer transition-all group relative"
+                  >
+                    <div className="flex justify-between items-start gap-4">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-slate-700 truncate mb-1">{item.input}</p>
+                        <div className="flex items-center gap-2 text-[10px] text-slate-400">
+                          <Clock size={10} />
+                          {new Date(item.timestamp).toLocaleString()}
+                        </div>
+                      </div>
+                      <button
+                        onClick={(e) => handleDeleteHistory(item.id, e)}
+                        className="p-1.5 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"
+                        title="Eliminar del historial"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {result && (
             <div className="mt-10 p-8 bg-emerald-50 rounded-2xl border border-emerald-100 relative group animate-in fade-in slide-in-from-bottom-4 duration-500">
