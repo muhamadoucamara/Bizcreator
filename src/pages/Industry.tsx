@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { AITool } from '../components/AITool';
-import { AdSlot } from '../components/AdSlot';
 import { CheckCircle2, Lightbulb, HelpCircle } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
@@ -126,8 +125,6 @@ export const IndustryPage: React.FC = () => {
         <h1 className="text-4xl md:text-6xl font-extrabold text-indigo-950 mb-6">{data.name}</h1>
         <p className="text-xl text-slate-600 leading-relaxed">{data.intro}</p>
       </section>
-
-      <AdSlot position="middle" />
 
       <section className="space-y-12">
         {data.tools.map((tool: any) => (

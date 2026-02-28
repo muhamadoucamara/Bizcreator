@@ -13,7 +13,3 @@
     @apply bg-white text-slate-900 antialiased;
   }
 }
-
-.markdown-body {
-  @apply prose prose-slate max-w-none;
-}

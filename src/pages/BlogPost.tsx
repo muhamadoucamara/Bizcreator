@@ -2,7 +2,6 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Calendar, User, ArrowLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-import { AdSlot } from '../components/AdSlot';
 
 export const BlogPost: React.FC = () => {
   const { slug } = useParams();
@@ -61,8 +60,6 @@ Lanzar una marca es un maratón, no un sprint. Con las herramientas adecuadas y 
         alt="Branding"
         referrerPolicy="no-referrer"
       />
-
-      <AdSlot position="middle" />
 
       <div className="prose prose-lg prose-slate max-w-none prose-headings:text-indigo-950 prose-headings:font-bold prose-a:text-emerald-600">
         <ReactMarkdown>{content}</ReactMarkdown>

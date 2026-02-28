@@ -1,18 +1,12 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, Rocket, ChevronDown } from 'lucide-react';
-import { AdSlot } from './AdSlot';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans">
-      {/* Header Ad */}
-      <div className="max-w-7xl mx-auto px-4 pt-4">
-        <AdSlot position="header" />
-      </div>
-
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-bottom border-slate-100">
         <nav className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 group">
@@ -123,8 +117,6 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
               </ul>
             </div>
           </div>
-
-          <AdSlot position="footer" />
 
           <div className="border-t border-indigo-900 mt-12 pt-8 text-center text-xs text-indigo-300">
             <p>© {new Date().getFullYear()} BizCreator. Todos los derechos reservados.</p>

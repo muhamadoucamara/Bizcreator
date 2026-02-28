@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Rocket, Zap, Shield, Star, ArrowRight, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { AdSlot } from '../components/AdSlot';
+import { Rocket, Zap, Shield, Star, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export const Home: React.FC = () => {
   const testimonials = [
@@ -13,36 +11,6 @@ export const Home: React.FC = () => {
     { name: "Javier Montes", role: "Restaurante El Sabor", text: "El generador de slogans nos ayudó a definir nuestra marca. ¡A los clientes les encanta nuestra nueva frase!" }
   ];
 
-  const [currentIndex, setCurrentIndex] = React.useState(0);
-  const [direction, setDirection] = React.useState(0);
-
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 500 : -500,
-      opacity: 0
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 500 : -500,
-      opacity: 0
-    })
-  };
-
-  const nextTestimonial = () => {
-    setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
   return (
     <div className="space-y-24">
       {/* Hero Section */}
@@ -50,12 +18,7 @@ export const Home: React.FC = () => {
         <div className="absolute top-0 right-0 -z-10 w-1/2 h-full bg-indigo-50/50 rounded-l-[100px] hidden lg:block" />
         
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="space-y-8"
-          >
+          <div className="space-y-8">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-bold">
               <Zap size={16} />
               <span>IA de última generación</span>
@@ -84,14 +47,9 @@ export const Home: React.FC = () => {
                 <span className="text-indigo-950 font-bold">+10,000</span> emprendedores ya confían en nosotros
               </p>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative"
-          >
+          <div className="relative">
             <div className="relative z-10 bg-white p-8 rounded-[40px] shadow-2xl border border-slate-100">
               <div className="space-y-6">
                 <div className="h-12 w-full bg-slate-50 rounded-xl animate-pulse" />
@@ -105,12 +63,9 @@ export const Home: React.FC = () => {
             </div>
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl" />
             <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl" />
-          </motion.div>
+          </div>
         </div>
       </section>
-
-      {/* Ad Slot */}
-      <AdSlot position="middle" />
 
       {/* Benefits Section */}
       <section className="py-20">
@@ -165,76 +120,25 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Testimonials Carousel */}
-      <section className="py-20 overflow-hidden">
+      {/* Testimonials */}
+      <section className="py-20">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl font-bold text-indigo-950 mb-6">Lo que dicen nuestros usuarios</h2>
-          <p className="text-slate-600">Únete a la comunidad de emprendedores que están transformando sus ideas.</p>
         </div>
-        
-        <div className="max-w-4xl mx-auto relative px-12">
-          <div className="relative h-[300px] md:h-[250px]">
-            <AnimatePresence initial={false} custom={direction}>
-              <motion.div
-                key={currentIndex}
-                custom={direction}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  x: { type: "spring", stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.2 }
-                }}
-                className="absolute w-full"
-              >
-                <div className="p-8 md:p-12 bg-white rounded-[40px] border border-slate-100 shadow-xl italic text-slate-700 relative">
-                  <Star className="text-amber-400 absolute top-8 right-8" size={32} fill="currentColor" />
-                  <p className="text-xl md:text-2xl leading-relaxed mb-8">"{testimonials[currentIndex].text}"</p>
-                  <div className="flex items-center gap-4 not-italic">
-                    <img 
-                      src={`https://picsum.photos/seed/${testimonials[currentIndex].name}/100/100`} 
-                      className="w-16 h-16 rounded-full border-4 border-emerald-50" 
-                      alt={testimonials[currentIndex].name} 
-                      referrerPolicy="no-referrer" 
-                    />
-                    <div>
-                      <p className="font-bold text-indigo-950 text-lg">{testimonials[currentIndex].name}</p>
-                      <p className="text-sm text-emerald-600 font-semibold uppercase tracking-wider">{testimonials[currentIndex].role}</p>
-                    </div>
-                  </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {testimonials.slice(0, 3).map((t, idx) => (
+            <div key={idx} className="p-8 bg-slate-50 rounded-3xl border border-slate-100 italic text-slate-700 relative">
+              <Star className="text-amber-400 absolute top-8 right-8" size={20} fill="currentColor" />
+              <p className="mb-6 leading-relaxed">"{t.text}"</p>
+              <div className="flex items-center gap-4 not-italic">
+                <img src={`https://picsum.photos/seed/${t.name}/100/100`} className="w-12 h-12 rounded-full" alt={t.name} referrerPolicy="no-referrer" />
+                <div>
+                  <p className="font-bold text-indigo-950">{t.name}</p>
+                  <p className="text-xs text-slate-500">{t.role}</p>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Navigation Buttons */}
-          <button 
-            onClick={prevTestimonial}
-            className="absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg border border-slate-100 flex items-center justify-center text-indigo-950 hover:bg-indigo-900 hover:text-white transition-all z-20"
-          >
-            <ChevronLeft size={24} />
-          </button>
-          <button 
-            onClick={nextTestimonial}
-            className="absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg border border-slate-100 flex items-center justify-center text-indigo-950 hover:bg-indigo-900 hover:text-white transition-all z-20"
-          >
-            <ChevronRight size={24} />
-          </button>
-
-          {/* Dots */}
-          <div className="flex justify-center gap-2 mt-12">
-            {testimonials.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => {
-                  setDirection(idx > currentIndex ? 1 : -1);
-                  setCurrentIndex(idx);
-                }}
-                className={`w-3 h-3 rounded-full transition-all ${idx === currentIndex ? 'bg-emerald-500 w-8' : 'bg-slate-200'}`}
-              />
-            ))}
-          </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 

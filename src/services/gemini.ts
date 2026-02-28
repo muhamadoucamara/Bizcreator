@@ -24,7 +24,7 @@ const prompts: Record<ToolType, (input: string) => string> = {
 export async function generateContent(type: ToolType, input: string): Promise<string> {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash",
+      model: "gemini-3-flash-preview",
       contents: [{ parts: [{ text: prompts[type](input) }] }],
     });
     return response.text || "No se pudo generar el contenido.";

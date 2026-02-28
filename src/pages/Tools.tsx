@@ -1,6 +1,5 @@
 import React from 'react';
 import { AITool } from '../components/AITool';
-import { AdSlot } from '../components/AdSlot';
 
 export const Tools: React.FC = () => {
   const tools = [
@@ -52,7 +51,6 @@ export const Tools: React.FC = () => {
         {tools.map((tool, idx) => (
           <React.Fragment key={tool.type}>
             <AITool {...tool} />
-            {idx === 1 && <AdSlot position="middle" />}
           </React.Fragment>
         ))}
       </div>
